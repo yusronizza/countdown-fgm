@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="index.css" rel="stylesheet" />
+    <title>Festival Gadjah Mada</title>
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
+      defer
+    ></script>
+  </head>
+  <body class="bg-im">
+    <div class="color-overlay bg-black bg-opacity-80"></div>
+    <div class="flex justify-center">
+      <div
+        class="
+          absolute
+          text-5xl
+          md:text-7xl
+          lg:text-7xl
+          mt-40
+          lg:mt-34
+          md:mt-32
+          font-extralight
+          text-white
+        "
+      >
+        Festival Gadjah Mada
+      </div>
+    </div>
+    <div
+      class="
+        flex flex-wrap
+        justify-center
+        item-center
+        w-screen
+        h-screen
+        content-center
+      "
+    >
+      <div class="z-10">
+        <div
+          class="
+            min-w-screen min-h-screen
+            flex
+            items-center
+            justify-center
+            px-5
+            py-5
+          "
+          x-data="countdown()"
+          x-init="start()"
+        >
+          <div class="text-yellow-100">
+            <div
+              class="
+                text-6xl text-center
+                flex
+                w-full
+                items-center
+                justify-center
+              "
+            >
+              <div class="w-24 mx-1 p-2 bg-white text-yellow-500 rounded-lg">
+                <div class="font-mono leading-none color" x-text="days">00</div>
+                <div class="font-mono uppercase text-sm leading-none color">
+                  Hari
+                </div>
+              </div>
+              <div class="w-24 mx-1 p-2 bg-white text-yellow-500 rounded-lg">
+                <div class="font-mono leading-none color" x-text="hours">
+                  00
+                </div>
+                <div class="font-mono uppercase text-sm leading-none color">
+                  Jam
+                </div>
+              </div>
+              <div class="w-24 mx-1 p-2 bg-white text-yellow-500 rounded-lg">
+                <div class="font-mono leading-none color" x-text="minutes">
+                  00
+                </div>
+                <div class="font-mono uppercase text-sm leading-none color">
+                  Menit
+                </div>
+              </div>
+              <div class="w-24 mx-1 p-2 bg-white text-yellow-500 rounded-lg">
+                <div class="font-mono leading-none color" x-text="seconds">
+                  00
+                </div>
+                <div class="font-mono uppercase text-sm leading-none color">
+                  Detik
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  function countdown() {
+    return {
+      seconds: "00",
+      minutes: "00",
+      hours: "00",
+      days: "00",
+      distance: 0,
+      countdown: null,
+      beerTime: new Date("November 22, 2021 00:00:00").getTime(),
+      now: new Date().getTime(),
+      start: function () {
+        this.countdown = setInterval(() => {
+          this.now = new Date().getTime();
+          this.distance = this.beerTime - this.now;
+
+          this.days = this.padNum(
+            Math.floor(this.distance / (1000 * 60 * 60 * 24))
+          );
+          this.hours = this.padNum(
+            Math.floor(
+              (this.distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            )
+          );
+          this.minutes = this.padNum(
+            Math.floor((this.distance % (1000 * 60 * 60)) / (1000 * 60))
+          );
+          this.seconds = this.padNum(
+            Math.floor((this.distance % (1000 * 60)) / 1000)
+          );
+          if (this.distance < 0) {
+            clearInterval(this.countdown);
+            this.days = "00";
+            this.hours = "00";
+            this.minutes = "00";
+            this.seconds = "00";
+          }
+        }, 100);
+      },
+      padNum: function (num) {
+        var zero = "";
+        for (var i = 0; i < 2; i++) {
+          zero += "0";
+        }
+        return (zero + num).slice(-2);
+      },
+    };
+  }
+</script>
